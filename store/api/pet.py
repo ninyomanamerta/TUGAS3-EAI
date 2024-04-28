@@ -1,6 +1,7 @@
 from flask import Blueprint, request
 from webargs.flaskparser import parser
 from marshmallow import Schema, fields
+from flask import jsonify
 from ..schemas import model
 from .. import impl
 
@@ -62,7 +63,26 @@ def FindPetsByTags():
     options = {}
     options["tags"] = request.args.get("tags")
 
-    return impl.pet.FindPetsByTags(options)
+    # return impl.pet.FindPetsByTags(options)
+    
+    # Mendapatkan nilai tags dari parameter query
+    tags = request.args.get("tags")
+
+    # Implementasi logika bisnis untuk mengembalikan data berdasarkan tags
+    if tags == "kucing":
+        pets = [{
+            "category": "Kucing",
+            "id": 100,
+            "name": "Meow",
+            "photoUrls": ["url_ke_foto"],
+            "status": "Tersedia",
+            "tags": ["kucing"]
+        }]
+    else:
+        pets = []
+
+    # Mengembalikan response dalam format JSON
+    return jsonify(pets), 200
 
 
 @bp.route('/pet/<petId>', methods=['get'])

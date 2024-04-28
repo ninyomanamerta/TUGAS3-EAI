@@ -73,14 +73,29 @@ def FindPetsByTags(options):
     # Implement your business logic here
     # All the parameters are present in the options argument
 
-    return json.dumps([{
-        "category": "<Category>",
-        "id": "<int64>",
-        "name": "<string>",
-        "photoUrls": "<array>",
-        "status": "<string>",
-        "tags": "<array>",
-    }]), 200
+    # return json.dumps([{
+    #     "category": "<Category>",
+    #     "id": "<int64>",
+    #     "name": "<string>",
+    #     "photoUrls": "<array>",
+    #     "status": "<string>",
+    #     "tags": "<array>",
+    # }]), 200
+    
+    if "tags" in options and options["tags"] == "kucing":
+        pets = [{
+            "category": "Kucing",
+            "id": 100,
+            "name": "Meow",
+            "photoUrls": ["url_ke_foto"],
+            "status": "Tersedia",
+            "tags": ["kucing"]
+        }]
+    else:
+        # Jika tidak ada tag yang sesuai, kembalikan daftar kosong
+        pets = []
+
+    return json.dumps(pets), 200
 
 
 def GetPetById(options):
